@@ -1,0 +1,21 @@
+# Credenciales y secretos: nunca al repositorio
+.env
+*.env
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Datos y copias locales
+*.sql.bak
+backup/*.enc
+backup/*.dump
+
+# Sistema / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
