@@ -1,6 +1,6 @@
 # Plataforma de videojuegos online — Proyecto SBD 2026-27
 
-Grupo: <n.º> · Miembros: Victor Castro Quesada, Oscar Fernandez Andujar
+Miembros: Victor Castro Quesada, Oscar Fernandez Andujar
 
 ## Datos del proyecto
 
@@ -11,14 +11,16 @@ Grupo: <n.º> · Miembros: Victor Castro Quesada, Oscar Fernandez Andujar
 | Asignatura | Seguridad en las Bases de Datos |
 | Titulación | Grado en Ciberseguridad · ENTI-UB · Curso 2026-27 |
 | Profesor | Eduard Lara |
-| Repositorio | <URL del repositorio de GitHub> |
+| Repositorio |https://github.com/Vittox/sbd-videojuegos  |
 
 ## Integrantes
 
-| Nombre | Cuenta de GitHub |
-|---|---|
-| Victor Castro Quesada | <usuario> |
-| Oscar Fernandez Andujar | <usuario> |
+| Nombre |
+|---|
+| Victor Castro Quesada |
+|---|
+| Oscar Fernandez Andujar |
+|---|
 
 ## Enunciado
 
