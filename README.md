@@ -120,7 +120,7 @@ Todos son datos sintéticos. La contraseña de todos ellos se define en la varia
 | Jugador menor de edad | menor_test | `SEED_TEST_PASSWORD` en `.env` |
 
 ## Uso de IA
-El script de datos `db/seed_datos.py` se generó con Claude, con permiso del profesor para esta parte (Python y Faker). El esquema SQL, el `docker-compose.yml`, el modelo E-R y el informe son trabajo del grupo.
+Nuestro uso de IA ha sido en un enfoque estructural de datos ayudándonos a como repartir y decidir cuáles eran los datos más importantes en los esquemas en base a nuestro criterio, también los archivos faker de relleno de datos los cuales han sido muy tediosos con muchos errores y pruebas y por pura optimización nos hemos apoyado a en pulir el código y informes como Readme ya que la claridad con la cual genera los informes markdown nos facilita a que se vea el proyecto mejor en GitHub. 
 
 ## Estructura
 - db/       esquema (`01_esquema.sql`), script de datos (`seed_datos.py`), vistas, roles
