@@ -98,17 +98,32 @@ Entregables de M0: esquema SQL, script de datos, `docker-compose.yml`, README, i
 - Python 3.11+
 
 ## Puesta en marcha
-1. cp .env.example .env   # rellenar valores
-2. docker compose up -d
-3. pip install -r requirements.txt
-4. python app/main.py
+1. `cp .env.example .env` (en Windows: `copy .env.example .env`) y rellenar los valores. `MYSQL_DATABASE` debe ser `tienda_juegos`.
+2. `docker compose up -d` y esperar a que el contenedor figure como `healthy` (`docker compose ps`). El esquema `db/01_esquema.sql` se carga solo la primera vez, con el volumen vacío.
+3. `python -m venv .venv`, activar el entorno y `pip install -r requirements.txt`.
+4. `python db/seed_datos.py` carga los datos sintéticos (1.095 filas con la semilla por defecto). Con `--reset` vacía las tablas y vuelve a cargar.
+5. Para probar desde cero: `docker compose down -v` y volver al paso 2.
+
+La aplicación (`app/main.py`) llegará en hitos posteriores.
 
 ## Usuarios de prueba
+Todos son datos sintéticos. La contraseña de todos ellos se define en la variable `SEED_TEST_PASSWORD` del `.env`. Si no se define, el script genera una aleatoria y la muestra una sola vez al terminar.
+
 | Rol | Usuario | Dónde está la contraseña |
 |-----|---------|---------------------------|
+| Administrador | admin_test | `SEED_TEST_PASSWORD` en `.env` |
+| Moderador | moderador_test | `SEED_TEST_PASSWORD` en `.env` |
+| DevOps | devops_test | `SEED_TEST_PASSWORD` en `.env` |
+| Creador | creador_test | `SEED_TEST_PASSWORD` en `.env` |
+| Distribuidor | distribuidor_test | `SEED_TEST_PASSWORD` en `.env` |
+| Jugador | jugador_test | `SEED_TEST_PASSWORD` en `.env` |
+| Jugador menor de edad | menor_test | `SEED_TEST_PASSWORD` en `.env` |
+
+## Uso de IA
+El script de datos `db/seed_datos.py` se generó con Claude, con permiso del profesor para esta parte (Python y Faker). El esquema SQL, el `docker-compose.yml`, el modelo E-R y el informe son trabajo del grupo.
 
 ## Estructura
-- db/       esquema, datos, vistas, roles
+- db/       esquema (`01_esquema.sql`), script de datos (`seed_datos.py`), vistas, roles
 - app/      aplicación Python
 - backup/   scripts de backup y restauración
 - docs/     informes de hito e informe final
