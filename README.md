@@ -99,15 +99,15 @@ Entregables de M0: esquema SQL, script de datos, `docker-compose.yml`, README, i
 
 ## Puesta en marcha
 1. `cp .env.example .env` (en Windows: `copy .env.example .env`) y rellenar los valores. `MYSQL_DATABASE` debe ser `tienda_juegos`.
-2. `docker compose up -d` y esperar a que el contenedor figure como `healthy` (`docker compose ps`). El esquema `db/01_esquema.sql` se carga solo la primera vez, con el volumen vacío.
+2. `docker compose up -d` y esperar a que el contenedor figure como `healthy` (`docker compose ps`). Los scripts `db/01_esquema.sql`, `db/02_vistas.sql` y `db/03_transacciones.sql` se cargan solos por orden alfabético la primera vez, con el volumen vacío.
 3. `python -m venv .venv`, activar el entorno y `pip install -r requirements.txt`.
-4. `python db/seed_datos.py` carga los datos sintéticos (1.095 filas con la semilla por defecto). Con `--reset` vacía las tablas y vuelve a cargar.
+4. `python db/seed_datos_v2.py` carga los datos sintéticos (1.095 filas con la semilla por defecto). Con `--reset` vacía las tablas y vuelve a cargar.
 5. Para probar desde cero: `docker compose down -v` y volver al paso 2.
 
 La aplicación (`app/main.py`) llegará en hitos posteriores.
 
 ## Usuarios de prueba
-Todos son datos sintéticos. La contraseña de todos ellos se define en la variable `SEED_TEST_PASSWORD` del `.env`. Si no se define, el script genera una aleatoria y la muestra una sola vez al terminar.
+Todos son datos sintéticos. La contraseña de las cuentas de aplicación se define en la variable `SEED_TEST_PASSWORD` del `.env`. Si no se define, el script genera una aleatoria y la muestra una sola vez al terminar.
 
 | Rol | Usuario | Dónde está la contraseña |
 |-----|---------|---------------------------|
@@ -119,11 +119,20 @@ Todos son datos sintéticos. La contraseña de todos ellos se define en la varia
 | Jugador | jugador_test | `SEED_TEST_PASSWORD` en `.env` |
 | Jugador menor de edad | menor_test | `SEED_TEST_PASSWORD` en `.env` |
 
+### Usuarios de MySQL para vistas de seguridad (M1)
+Se crean automáticamente en `db/02_vistas.sql` con permisos `SELECT` exclusivos sobre sus vistas (sin acceso directo a las tablas base):
+
+| Usuario MySQL | Perfil simulado | Vistas autorizadas | Contraseña |
+|---------------|-----------------|--------------------|------------|
+| `jugador_test` | Jugador mayor de edad | `v_cuentas_publicas`, `v_catalogo_disponible`, `v_mis_compras`, `v_mis_mensajes` | `Sbd_Test_2026!` |
+| `menor_test` | Jugador menor de edad (14 años) | `v_cuentas_publicas`, `v_catalogo_disponible`, `v_mis_compras`, `v_mis_mensajes` | `Sbd_Test_2026!` |
+| `moderador_test` | Moderador / Analítica | `v_cuentas_publicas`, `v_compras_analitica` | `Sbd_Test_2026!` |
+
 ## Uso de IA
 Nuestro uso de IA ha sido en un enfoque estructural de datos ayudándonos a como repartir y decidir cuáles eran los datos más importantes en los esquemas en base a nuestro criterio, también los archivos faker de relleno de datos los cuales han sido muy tediosos con muchos errores y pruebas y por pura optimización nos hemos apoyado a en pulir el código y informes como Readme ya que la claridad con la cual genera los informes markdown nos facilita a que se vea el proyecto mejor en GitHub. 
 
 ## Estructura
-- db/       esquema (`01_esquema.sql`), script de datos (`seed_datos.py`), vistas, roles
+- db/       esquema (`01_esquema.sql`), vistas de seguridad (`02_vistas.sql`), transacciones ACID (`03_transacciones.sql`), script de datos (`seed_datos_v2.py`)
 - app/      aplicación Python
 - backup/   scripts de backup y restauración
 - docs/     informes de hito e informe final
